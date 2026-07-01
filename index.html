@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>RHYTHM LAB — ECG Puzzle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand-mini"><span class="dot"></span>RHYTHM&nbsp;LAB</div>
+  <button class="icon-btn" id="muteBtn">🔊</button>
+</div>
+
+<!-- ============ PART 1: HOME ============ -->
+<section class="screen active" id="screen-home">
+  <div class="monitor-bezel">
+    <div class="monitor-screen">
+      <div class="eyebrow">▍a bedside puzzle game</div>
+      <h1 class="hero-title">READ THE <span>RHYTHM</span></h1>
+      <p class="hero-sub">Piece together 15 real ECG waveforms — beat by beat, tile by tile.</p>
+      <canvas id="heroCanvas"></canvas>
+      <div class="vitals-row">
+        <div>LEVELS <b>15</b></div>
+        <div>BEST STREAK <b id="heroStreak">0</b></div>
+        <div>STARS <b id="heroStars">0/45</b></div>
+      </div>
+      <div class="cta-row">
+        <button class="btn btn-primary" id="playBtn">▶ Start Rounds</button>
+        <button class="btn btn-ghost" id="certPeekBtn">🎓 Certificate</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-stats">
+    <div class="stat-card"><div class="num" id="homeCompleted">0/15</div><div class="lbl">Cleared</div></div>
+    <div class="stat-card"><div class="num" id="homeGold">0</div><div class="lbl">🥇 Gold</div></div>
+    <div class="stat-card"><div class="num" id="homeBest">--</div><div class="lbl">Fastest Clear</div></div>
+  </div>
+  <div class="overall-badge" id="overallBadgeBox"></div>
+</section>
+
+<!-- ============ PART 2: LEVEL SELECT ============ -->
+<section class="screen" id="screen-levels">
+  <div class="section-head">
+    <h2>Select a Strip</h2>
+    <p>// 15 rhythms · unlock sequentially · 3★ per level</p>
+  </div>
+  <div class="progressbar-wrap">
+    <div class="progressbar-label"><span>OVERALL PROGRESS</span><span id="pbText">0%</span></div>
+    <div class="progressbar-track"><div class="progressbar-fill" id="pbFill" style="width:0%"></div></div>
+  </div>
+  <div class="levels-grid" id="levelsGrid"></div>
+  <button class="btn btn-ghost" style="margin-top:20px" id="backHomeBtn">← Home</button>
+</section>
+
+<!-- ============ PART 3-5: GAME ============ -->
+<section class="screen" id="screen-game">
+  <div class="hud-title" id="gameLevelTitle">LEVEL 1 — NORMAL SINUS RHYTHM</div>
+  <div class="game-hud">
+    <div class="hud-pill timer" id="timerPill">⏱️ <span id="timerText">1:30</span></div>
+    <div class="hud-pill">💡 <span id="hintsText">3</span> hints</div>
+    <div class="hud-pill">⭐ best: <span id="bestStarsText">—</span></div>
+  </div>
+
+  <div class="puzzle-wrap">
+    <div class="slots-grid" id="slotsGrid"></div>
+    <div class="hint-overlay" id="hintOverlay"></div>
+  </div>
+
+  <div class="tray-wrap">
+    <div class="tray-label">DRAG TILES INTO PLACE</div>
+    <div class="tray" id="trayEl"></div>
+  </div>
+
+  <div class="game-controls">
+    <button class="btn btn-ghost" id="hintBtn">💡 Hint</button>
+    <button class="btn btn-ghost" id="restartLevelBtn">↺ Restart</button>
+    <button class="btn btn-ghost" id="exitLevelBtn">← Levels</button>
+  </div>
+
+  <div class="fact-box" id="factBox"></div>
+</section>
+
+<!-- ============ PART 7: CERTIFICATE ============ -->
+<section class="screen" id="screen-cert">
+  <div class="section-head" style="text-align:center; max-width:560px;">
+    <h2>🎓 Certificate of Rhythm Mastery</h2>
+    <p>Complete levels to fill in your score</p>
+  </div>
+  <div class="cert-wrap">
+    <canvas id="certCanvas" width="900" height="640"></canvas>
+    <div class="cert-name-row">
+      <input type="text" id="certNameInput" placeholder="Enter your name" maxlength="28">
+      <button class="btn btn-primary" id="certRenderBtn">Render</button>
+    </div>
+    <div class="cta-row">
+      <button class="btn btn-ghost" id="certDownloadBtn">⬇ Download PNG</button>
+      <button class="btn btn-ghost" id="certBackBtn">← Home</button>
+    </div>
+  </div>
+</section>
+
+<!-- Win / Fail Modal -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal-card" id="modalCard"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="game.js"></script>
+</body>
+</html>
